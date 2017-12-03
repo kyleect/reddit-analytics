@@ -137,6 +137,18 @@ class App extends Component {
                                         .humanize()} later`}
                                   </List.Item>
                                   <List.Item>
+                                    {i > 0 &&
+                                      `${moment
+                                        .duration(
+                                          moment
+                                            .unix(result.created_utc)
+                                            .diff(
+                                              moment.unix(arr[0].created_utc)
+                                            )
+                                        )
+                                        .humanize()} from original post`}
+                                  </List.Item>
+                                  <List.Item>
                                     <Icon name="reddit" /> r/{result.subreddit}
                                   </List.Item>
                                   <List.Item>
