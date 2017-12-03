@@ -1,18 +1,10 @@
 import React, { Component } from "react";
 import "./App.css";
-import {
-  Item,
-  Button,
-  Input,
-  Segment,
-  Statistic,
-  List,
-  Icon,
-  Tab,
-  Divider
-} from "semantic-ui-react";
+import { Tab, Segment } from "semantic-ui-react";
 import { ControlForm } from "./components/utils/control-form";
-import moment from "moment";
+
+import { UrlSearchForm } from "./components/url-search-form";
+import { UrlSearchResults } from "./components/url-search-results";
 
 class App extends Component {
   static sortResults = (a, b) => {
@@ -59,20 +51,6 @@ class App extends Component {
     this.setState({ results: sortedResults });
   }
 
-  get scoreTotal() {
-    return this.state.results.reduce(
-      (total, result) => total + result.score,
-      0
-    );
-  }
-
-  get commentsTotal() {
-    return this.state.results.reduce(
-      (total, result) => total + result.num_comments,
-      0
-    );
-  }
-
   render() {
     return (
       <div className="App">
@@ -83,137 +61,12 @@ class App extends Component {
               render: () => (
                 <div>
                   <Segment>
-                    <ControlForm
-                      initialState={{ url: "" }}
-                      onSubmit={this.fetchResults}
-                    >
-                      {({ onChange, value, state }) => (
-                        <div>
-                          <Input
-                            type="text"
-                            id="url"
-                            label="Url"
-                            action="Search"
-                            onChange={onChange("url")}
-                            value={value("url")}
-                            style={{ width: "100%" }}
-                          />
-                        </div>
-                      )}
-                    </ControlForm>
+                    <UrlSearchForm onSubmit={this.fetchResults} />
                   </Segment>
 
                   {this.state.results && (
                     <Segment>
-                      <Item.Group divided>
-                        {this.state.results.map((result, i, arr) => (
-                          <Item key={i}>
-                            {result.thumbnail !== "default" && (
-                              <Item.Image src={result.thumbnail} size="tiny" />
-                            )}
-                            <Item.Content>
-                              <Item.Header>{result.title}</Item.Header>
-                              <Item.Meta>
-                                <List>
-                                  {i === 0 && (
-                                    <List.Item>
-                                      <Icon name="trophy" color="yellow" />
-                                      {"Original Post"}
-                                    </List.Item>
-                                  )}
-                                  <List.Item>
-                                    <Icon name="reddit" /> r/{result.subreddit}
-                                  </List.Item>
-                                  <List.Item>
-                                    <Icon name="user" />
-                                    {result.author}
-                                  </List.Item>
-                                  <List.Item>
-                                    <Icon name="calendar" />
-                                    {`${moment
-                                      .unix(result.created_utc)
-                                      .format(
-                                        "YYYY-MM-DD @ h:mm:ss a"
-                                      )} - ${moment
-                                      .unix(result.created_utc)
-                                      .fromNow()}`}
-                                  </List.Item>
-                                  {i > 0 && (
-                                    <List.Item>
-                                      <Icon name="time" />
-                                      {`${moment
-                                        .duration(
-                                          moment
-                                            .unix(result.created_utc)
-                                            .diff(
-                                              moment.unix(
-                                                arr[i - 1].created_utc
-                                              )
-                                            )
-                                        )
-                                        .humanize()} from last post`}
-                                    </List.Item>
-                                  )}
-                                  {i > 0 && (
-                                    <List.Item>
-                                      <Icon name="time" />
-                                      {`${moment
-                                        .duration(
-                                          moment
-                                            .unix(result.created_utc)
-                                            .diff(
-                                              moment.unix(arr[0].created_utc)
-                                            )
-                                        )
-                                        .humanize()} from original post`}
-                                    </List.Item>
-                                  )}
-                                  <List.Item>
-                                    <Icon name="arrow up" />
-                                    {`${result.score} score`}
-                                  </List.Item>
-                                  <List.Item>
-                                    <Icon name="comments" />
-                                    {`${result.num_comments} comment/s`}
-                                  </List.Item>
-                                  {i === 0 && (
-                                    <div>
-                                      <Divider />
-
-                                      <Statistic>
-                                        <Statistic.Value>
-                                          {this.scoreTotal}
-                                        </Statistic.Value>
-                                        <Statistic.Label>
-                                          Total Score
-                                        </Statistic.Label>
-                                      </Statistic>
-
-                                      <Statistic>
-                                        <Statistic.Value>
-                                          {this.commentsTotal}
-                                        </Statistic.Value>
-                                        <Statistic.Label>
-                                          Total Comment/s
-                                        </Statistic.Label>
-                                      </Statistic>
-
-                                      <Statistic>
-                                        <Statistic.Value>
-                                          {this.state.results.length - 1}
-                                        </Statistic.Value>
-                                        <Statistic.Label>
-                                          Repost/s
-                                        </Statistic.Label>
-                                      </Statistic>
-                                    </div>
-                                  )}
-                                </List>
-                              </Item.Meta>
-                            </Item.Content>
-                          </Item>
-                        ))}
-                      </Item.Group>
+                      <UrlSearchResults results={this.state.results} />
                     </Segment>
                   )}
                 </div>
