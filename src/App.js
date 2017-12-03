@@ -33,22 +33,23 @@ class App extends Component {
     this.fetchResults = this.fetchResults.bind(this);
   }
 
-  async fetchResults({ url }) {
+  async fetchResults({ url }, limit = 100) {
     if (url.length === 0) {
       return;
     }
 
     this.setState({ url });
 
-    const response = await fetch(
-      `https://www.reddit.com/search.json?q=url:${url}&limit=100`,
-      {
-        method: "GET",
-        headers: new Headers(),
-        mode: "cors",
-        cache: "default"
-      }
-    );
+    const requestUrl = `https://www.reddit.com/search.json?q=url:${url}&limit=${
+      limit
+    }`;
+
+    const response = await fetch(requestUrl, {
+      method: "GET",
+      headers: new Headers(),
+      mode: "cors",
+      cache: "default"
+    });
 
     const json = await response.json();
     const results = json.data.children.map(child => child.data);
