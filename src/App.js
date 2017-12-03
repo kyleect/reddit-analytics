@@ -98,8 +98,8 @@ class App extends Component {
                       </Statistic>
 
                       <Item.Group divided>
-                        {this.state.results.map(result => (
-                          <Item>
+                        {this.state.results.map((result, i) => (
+                          <Item key={i}>
                             {result.thumbnail !== "default" && (
                               <Item.Image src={result.thumbnail} size="tiny" />
                             )}
@@ -107,6 +107,11 @@ class App extends Component {
                               <Item.Header>{result.title}</Item.Header>
                               <Item.Meta>
                                 <List>
+                                  {i === 0 && (
+                                    <List.Item>
+                                      <strong>{"Original Post"}</strong>
+                                    </List.Item>
+                                  )}
                                   <List.Item>
                                     <Icon name="calendar" />
                                     {moment.unix(result.created_utc).fromNow()}
