@@ -58,6 +58,20 @@ class App extends Component {
     this.setState({ results: sortedResults });
   }
 
+  get scoreTotal() {
+    return this.state.results.reduce(
+      (total, result) => total + result.score,
+      0
+    );
+  }
+
+  get commentsTotal() {
+    return this.state.results.reduce(
+      (total, result) => total + result.num_comments,
+      0
+    );
+  }
+
   render() {
     return (
       <div className="App">
@@ -162,12 +176,34 @@ class App extends Component {
                                     {result.num_comments}
                                   </List.Item>
                                   {i === 0 && (
-                                    <Statistic>
-                                      <Statistic.Value>
-                                        {this.state.results.length - 1}
-                                      </Statistic.Value>
-                                      <Statistic.Label>Reposts</Statistic.Label>
-                                    </Statistic>
+                                    <div>
+                                      <Statistic>
+                                        <Statistic.Value>
+                                          {this.state.results.length - 1}
+                                        </Statistic.Value>
+                                        <Statistic.Label>
+                                          Reposts
+                                        </Statistic.Label>
+                                      </Statistic>
+
+                                      <Statistic>
+                                        <Statistic.Value>
+                                          {this.scoreTotal}
+                                        </Statistic.Value>
+                                        <Statistic.Label>
+                                          Total Score
+                                        </Statistic.Label>
+                                      </Statistic>
+
+                                      <Statistic>
+                                        <Statistic.Value>
+                                          {this.commentsTotal}
+                                        </Statistic.Value>
+                                        <Statistic.Label>
+                                          Total Comments
+                                        </Statistic.Label>
+                                      </Statistic>
+                                    </div>
                                   )}
                                 </List>
                               </Item.Meta>
