@@ -33,9 +33,10 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(json => json.data.children)
+      .then(children => children.map(child => child.data))
       .then(results =>
         results.slice().sort((a, b) => {
-          if (a.data.created < b.data.created) {
+          if (a.created < b.created) {
             return -1;
           } else {
             return 1;
@@ -81,22 +82,22 @@ class App extends Component {
               {this.state.results.map(result => (
                 <Item>
                   {result.thumbnail !== "default" && (
-                    <Item.Image src={result.data.thumbnail} />
+                    <Item.Image src={result.thumbnail} size="tiny" />
                   )}
                   <Item.Content>
-                    <Item.Header>{result.data.title}</Item.Header>
+                    <Item.Header>{result.title}</Item.Header>
                     <Item.Meta>
                       <List>
                         <List.Item>
-                          <Icon name="reddit" /> r/{result.data.subreddit}
+                          <Icon name="reddit" /> r/{result.subreddit}
                         </List.Item>
                         <List.Item>
                           <Icon name="user" />
-                          {result.data.author}
+                          {result.author}
                         </List.Item>
                         <List.Item>
                           <Icon name="calendar" />
-                          {moment.unix(result.data.created).fromNow()}
+                          {moment.unix(result.created_utc).fromNow()}
                         </List.Item>
                       </List>
                     </Item.Meta>
