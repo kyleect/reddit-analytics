@@ -8,7 +8,8 @@ import {
   Statistic,
   List,
   Icon,
-  Tab
+  Tab,
+  Divider
 } from "semantic-ui-react";
 import { ControlForm } from "./components/utils/control-form";
 import moment from "moment";
@@ -121,6 +122,13 @@ class App extends Component {
                                     </List.Item>
                                   )}
                                   <List.Item>
+                                    <Icon name="reddit" /> r/{result.subreddit}
+                                  </List.Item>
+                                  <List.Item>
+                                    <Icon name="user" />
+                                    {result.author}
+                                  </List.Item>
+                                  <List.Item>
                                     <Icon name="calendar" />
                                     {`${moment
                                       .unix(result.created_utc)
@@ -161,13 +169,6 @@ class App extends Component {
                                     </List.Item>
                                   )}
                                   <List.Item>
-                                    <Icon name="reddit" /> r/{result.subreddit}
-                                  </List.Item>
-                                  <List.Item>
-                                    <Icon name="user" />
-                                    {result.author}
-                                  </List.Item>
-                                  <List.Item>
                                     <Icon name="arrow up" />
                                     {`${result.score} score`}
                                   </List.Item>
@@ -177,14 +178,7 @@ class App extends Component {
                                   </List.Item>
                                   {i === 0 && (
                                     <div>
-                                      <Statistic>
-                                        <Statistic.Value>
-                                          {this.state.results.length - 1}
-                                        </Statistic.Value>
-                                        <Statistic.Label>
-                                          Repost/s
-                                        </Statistic.Label>
-                                      </Statistic>
+                                      <Divider />
 
                                       <Statistic>
                                         <Statistic.Value>
@@ -201,6 +195,15 @@ class App extends Component {
                                         </Statistic.Value>
                                         <Statistic.Label>
                                           Total Comment/s
+                                        </Statistic.Label>
+                                      </Statistic>
+
+                                      <Statistic>
+                                        <Statistic.Value>
+                                          {this.state.results.length - 1}
+                                        </Statistic.Value>
+                                        <Statistic.Label>
+                                          Repost/s
                                         </Statistic.Label>
                                       </Statistic>
                                     </div>
