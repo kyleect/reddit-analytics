@@ -32,7 +32,19 @@ class App extends Component {
       cache: "default"
     })
       .then(res => res.json())
-      .then(data => this.setState({ results: data }))
+      .then(json => json.data.children)
+      .then(results =>
+        results.slice().sort((a, b) => {
+          if (a.data.created < b.data.created) {
+            return -1;
+          } else {
+            return 1;
+          }
+
+          return 0;
+        })
+      )
+      .then(results => this.setState({ results }))
       .catch(err => console.error(err));
   }
 
@@ -61,14 +73,12 @@ class App extends Component {
         {this.state.results && (
           <Segment>
             <Statistic>
-              <Statistic.Value>
-                {this.state.results.data.children.length}
-              </Statistic.Value>
+              <Statistic.Value>{this.state.results.length}</Statistic.Value>
               <Statistic.Label>Reposts</Statistic.Label>
             </Statistic>
 
             <Item.Group divided>
-              {this.state.results.data.children.map(result => (
+              {this.state.results.map(result => (
                 <Item>
                   {result.thumbnail !== "default" && (
                     <Item.Image src={result.data.thumbnail} />
