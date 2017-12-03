@@ -30,37 +30,37 @@ class App extends Component {
       url: ""
     };
 
-    this.setSearchResults = this.setSearchResults.bind(this);
+    this.fetchResults = this.fetchResults.bind(this);
   }
 
-  setSearchResults({ url }) {
+  async fetchResults({ url }) {
     if (url.length === 0) {
       return;
     }
 
     this.setState({ url });
-    fetch(`https://www.reddit.com/search.json?q=url:${url}&limit=100`, {
-      method: "GET",
-      headers: new Headers(),
-      mode: "cors",
-      cache: "default"
-    })
-      .then(res => res.json())
-      .then(json => json.data.children)
-      .then(children => children.map(child => child.data))
-      .then(results => results.slice().sort(App.sortResults))
-      .then(results => this.setState({ results }))
-      .catch(err => console.error(err));
+
+    const response = await fetch(
+      `https://www.reddit.com/search.json?q=url:${url}&limit=100`,
+      {
+        method: "GET",
+        headers: new Headers(),
+        mode: "cors",
+        cache: "default"
+      }
+    );
+
+    const json = await response.json();
+    const results = json.data.children.map(child => child.data);
+    const sortedResults = results.slice().sort(App.sortResults);
+    this.setState({ results: sortedResults });
   }
 
   render() {
     return (
       <div className="App">
         <Segment>
-          <ControlForm
-            initialState={{ url: "" }}
-            onSubmit={this.setSearchResults}
-          >
+          <ControlForm initialState={{ url: "" }} onSubmit={this.fetchResults}>
             {({ onChange, value, state }) => (
               <div>
                 <Input
