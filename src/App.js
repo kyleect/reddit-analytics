@@ -109,7 +109,8 @@ class App extends Component {
                                 <List>
                                   {i === 0 && (
                                     <List.Item>
-                                      <strong>{"Original Post"}</strong>
+                                      <Icon name="trophy" color="yellow" />
+                                      {"Original Post"}
                                     </List.Item>
                                   )}
                                   <List.Item>
@@ -122,9 +123,10 @@ class App extends Component {
                                       .unix(result.created_utc)
                                       .fromNow()}`}
                                   </List.Item>
-                                  <List.Item>
-                                    {i > 0 &&
-                                      `${moment
+                                  {i > 0 && (
+                                    <List.Item>
+                                      <Icon name="time" />
+                                      {`${moment
                                         .duration(
                                           moment
                                             .unix(result.created_utc)
@@ -135,10 +137,12 @@ class App extends Component {
                                             )
                                         )
                                         .humanize()} later`}
-                                  </List.Item>
-                                  <List.Item>
-                                    {i > 0 &&
-                                      `${moment
+                                    </List.Item>
+                                  )}
+                                  {i > 0 && (
+                                    <List.Item>
+                                      <Icon name="time" />
+                                      {`${moment
                                         .duration(
                                           moment
                                             .unix(result.created_utc)
@@ -147,7 +151,8 @@ class App extends Component {
                                             )
                                         )
                                         .humanize()} from original post`}
-                                  </List.Item>
+                                    </List.Item>
+                                  )}
                                   <List.Item>
                                     <Icon name="reddit" /> r/{result.subreddit}
                                   </List.Item>
