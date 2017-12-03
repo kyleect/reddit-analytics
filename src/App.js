@@ -90,13 +90,6 @@ class App extends Component {
 
                   {this.state.results && (
                     <Segment>
-                      <Statistic>
-                        <Statistic.Value>
-                          {this.state.results.length}
-                        </Statistic.Value>
-                        <Statistic.Label>Reposts</Statistic.Label>
-                      </Statistic>
-
                       <Item.Group divided>
                         {this.state.results.map((result, i, arr) => (
                           <Item key={i}>
@@ -168,6 +161,14 @@ class App extends Component {
                                     <Icon name="comments" />
                                     {result.num_comments}
                                   </List.Item>
+                                  {i === 0 && (
+                                    <Statistic>
+                                      <Statistic.Value>
+                                        {this.state.results.length - 1}
+                                      </Statistic.Value>
+                                      <Statistic.Label>Reposts</Statistic.Label>
+                                    </Statistic>
+                                  )}
                                 </List>
                               </Item.Meta>
                             </Item.Content>
