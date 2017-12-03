@@ -10,6 +10,7 @@ import {
   Icon
 } from "semantic-ui-react";
 import { ControlForm } from "./components/utils/control-form";
+import moment from "moment";
 
 class App extends Component {
   constructor(props) {
@@ -82,6 +83,10 @@ class App extends Component {
                         <List.Item>
                           <Icon name="user" />
                           {result.data.author}
+                        </List.Item>
+                        <List.Item>
+                          <Icon name="calendar" />
+                          {moment.unix(result.data.created).fromNow()}
                         </List.Item>
                       </List>
                     </Item.Meta>
