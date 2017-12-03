@@ -35,7 +35,7 @@ class App extends Component {
           initialState={{ url: "" }}
           onSubmit={this.setSearchResults}
         >
-          {({ onChange, value }) => (
+          {({ onChange, value, state }) => (
             <div>
               <input
                 type="text"
@@ -43,7 +43,7 @@ class App extends Component {
                 value={value("url")}
               />
 
-              <button>Search</button>
+              <button disabled={!state.url}>Search</button>
             </div>
           )}
         </ControlForm>
