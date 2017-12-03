@@ -52,60 +52,72 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <ControlForm
-          initialState={{ url: "" }}
-          onSubmit={this.setSearchResults}
-        >
-          {({ onChange, value, state }) => (
-            <div>
-              <Input
-                type="text"
-                id="url"
-                label="Url"
-                action="Search"
-                onChange={onChange("url")}
-                value={value("url")}
-                style={{ width: "100%" }}
-              />
-            </div>
-          )}
-        </ControlForm>
+        <Segment>
+          <ControlForm
+            initialState={{ url: "" }}
+            onSubmit={this.setSearchResults}
+          >
+            {({ onChange, value, state }) => (
+              <div>
+                <Input
+                  type="text"
+                  id="url"
+                  label="Url"
+                  action="Search"
+                  onChange={onChange("url")}
+                  value={value("url")}
+                  style={{ width: "100%" }}
+                />
+              </div>
+            )}
+          </ControlForm>
+        </Segment>
 
         {this.state.results && (
-          <Segment>
-            <Statistic>
-              <Statistic.Value>{this.state.results.length}</Statistic.Value>
-              <Statistic.Label>Reposts</Statistic.Label>
-            </Statistic>
+          <div>
+            <Segment>
+              <Statistic>
+                <Statistic.Value>{this.state.results.length}</Statistic.Value>
+                <Statistic.Label>Reposts</Statistic.Label>
+              </Statistic>
 
-            <Item.Group divided>
-              {this.state.results.map(result => (
-                <Item>
-                  {result.thumbnail !== "default" && (
-                    <Item.Image src={result.thumbnail} size="tiny" />
-                  )}
-                  <Item.Content>
-                    <Item.Header>{result.title}</Item.Header>
-                    <Item.Meta>
-                      <List>
-                        <List.Item>
-                          <Icon name="reddit" /> r/{result.subreddit}
-                        </List.Item>
-                        <List.Item>
-                          <Icon name="user" />
-                          {result.author}
-                        </List.Item>
-                        <List.Item>
-                          <Icon name="calendar" />
-                          {moment.unix(result.created_utc).fromNow()}
-                        </List.Item>
-                      </List>
-                    </Item.Meta>
-                  </Item.Content>
-                </Item>
-              ))}
-            </Item.Group>
-          </Segment>
+              <Item.Group divided>
+                {this.state.results.map(result => (
+                  <Item>
+                    {result.thumbnail !== "default" && (
+                      <Item.Image src={result.thumbnail} size="tiny" />
+                    )}
+                    <Item.Content>
+                      <Item.Header>{result.title}</Item.Header>
+                      <Item.Meta>
+                        <List>
+                          <List.Item>
+                            <Icon name="calendar" />
+                            {moment.unix(result.created_utc).fromNow()}
+                          </List.Item>
+                          <List.Item>
+                            <Icon name="reddit" /> r/{result.subreddit}
+                          </List.Item>
+                          <List.Item>
+                            <Icon name="user" />
+                            {result.author}
+                          </List.Item>
+                          <List.Item>
+                            <Icon name="arrow up" />
+                            {result.score}
+                          </List.Item>
+                          <List.Item>
+                            <Icon name="comments" />
+                            {result.num_comments}
+                          </List.Item>
+                        </List>
+                      </Item.Meta>
+                    </Item.Content>
+                  </Item>
+                ))}
+              </Item.Group>
+            </Segment>
+          </div>
         )}
       </div>
     );
