@@ -98,7 +98,7 @@ class App extends Component {
                       </Statistic>
 
                       <Item.Group divided>
-                        {this.state.results.map((result, i) => (
+                        {this.state.results.map((result, i, arr) => (
                           <Item key={i}>
                             {result.thumbnail !== "default" && (
                               <Item.Image src={result.thumbnail} size="tiny" />
@@ -114,7 +114,27 @@ class App extends Component {
                                   )}
                                   <List.Item>
                                     <Icon name="calendar" />
-                                    {moment.unix(result.created_utc).fromNow()}
+                                    {`${moment
+                                      .unix(result.created_utc)
+                                      .format(
+                                        "YYYY-MM-DD @ h:mm:ss a"
+                                      )} - ${moment
+                                      .unix(result.created_utc)
+                                      .fromNow()}`}
+                                  </List.Item>
+                                  <List.Item>
+                                    {i > 0 &&
+                                      `${moment
+                                        .duration(
+                                          moment
+                                            .unix(result.created_utc)
+                                            .diff(
+                                              moment.unix(
+                                                arr[i - 1].created_utc
+                                              )
+                                            )
+                                        )
+                                        .humanize()} later`}
                                   </List.Item>
                                   <List.Item>
                                     <Icon name="reddit" /> r/{result.subreddit}
