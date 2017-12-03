@@ -13,6 +13,16 @@ import { ControlForm } from "./components/utils/control-form";
 import moment from "moment";
 
 class App extends Component {
+  static sortResults = (a, b) => {
+    if (a.created < b.created) {
+      return -1;
+    } else {
+      return 1;
+    }
+
+    return 0;
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -34,17 +44,7 @@ class App extends Component {
       .then(res => res.json())
       .then(json => json.data.children)
       .then(children => children.map(child => child.data))
-      .then(results =>
-        results.slice().sort((a, b) => {
-          if (a.created < b.created) {
-            return -1;
-          } else {
-            return 1;
-          }
-
-          return 0;
-        })
-      )
+      .then(results => results.slice().sort(App.sortResults))
       .then(results => this.setState({ results }))
       .catch(err => console.error(err));
   }
