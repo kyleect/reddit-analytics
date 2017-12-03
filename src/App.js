@@ -34,6 +34,10 @@ class App extends Component {
   }
 
   setSearchResults({ url }) {
+    if (url.length === 0) {
+      return;
+    }
+
     this.setState({ url });
     fetch(`https://www.reddit.com/search.json?q=url:${url}&limit=100`, {
       method: "GET",
