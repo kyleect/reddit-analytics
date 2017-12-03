@@ -25,7 +25,7 @@ class App extends Component {
 
   setSearchResults({ url }) {
     this.setState({ url });
-    fetch(`https://www.reddit.com/search.json?q=url:${url}`, {
+    fetch(`https://www.reddit.com/search.json?q=url:${url}&limit=100`, {
       method: "GET",
       headers: new Headers(),
       mode: "cors",
