@@ -143,7 +143,7 @@ class App extends Component {
                                               )
                                             )
                                         )
-                                        .humanize()} later`}
+                                        .humanize()} from last post`}
                                     </List.Item>
                                   )}
                                   {i > 0 && (
@@ -169,11 +169,11 @@ class App extends Component {
                                   </List.Item>
                                   <List.Item>
                                     <Icon name="arrow up" />
-                                    {result.score}
+                                    {`${result.score} score`}
                                   </List.Item>
                                   <List.Item>
                                     <Icon name="comments" />
-                                    {result.num_comments}
+                                    {`${result.num_comments} comment/s`}
                                   </List.Item>
                                   {i === 0 && (
                                     <div>
@@ -182,7 +182,7 @@ class App extends Component {
                                           {this.state.results.length - 1}
                                         </Statistic.Value>
                                         <Statistic.Label>
-                                          Reposts
+                                          Repost/s
                                         </Statistic.Label>
                                       </Statistic>
 
@@ -200,7 +200,7 @@ class App extends Component {
                                           {this.commentsTotal}
                                         </Statistic.Value>
                                         <Statistic.Label>
-                                          Total Comments
+                                          Total Comment/s
                                         </Statistic.Label>
                                       </Statistic>
                                     </div>
