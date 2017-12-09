@@ -4,6 +4,7 @@ import { Tab } from "semantic-ui-react";
 import { LinkTab } from "./components/link-tab";
 import { UserTab } from "./components/user-tab";
 import { SelftextTab } from "./components/selftext-tab";
+import { SubredditTab } from "./components/subreddit-tab";
 
 class App extends React.Component {
   render() {
@@ -22,6 +23,10 @@ class App extends React.Component {
             {
               menuItem: "Self Text",
               render: () => <SelftextTab />
+            },
+            {
+              menuItem: "Subreddit",
+              render: () => <SubredditTab />
             }
           ]}
         />
