@@ -11,12 +11,12 @@ class App extends React.Component {
         <Tab
           panes={[
             {
-              menuItem: "Link",
-              render: () => <LinkTab />
-            },
-            {
               menuItem: "User",
               render: () => <UserTab />
+            },
+            {
+              menuItem: "Link",
+              render: () => <LinkTab />
             }
           ]}
         />
