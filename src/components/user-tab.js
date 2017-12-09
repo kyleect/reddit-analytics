@@ -47,7 +47,7 @@ export class UserTab extends React.Component {
     this.onSubmitUserSearch = this.onSubmitUserSearch.bind(this);
   }
 
-  async onSubmitUserSearch({ user }) {
+  async onSubmitUserSearch(user) {
     const results = await fetchResults(user);
     this.setState({ user, results });
   }

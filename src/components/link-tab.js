@@ -45,7 +45,7 @@ export class LinkTab extends React.Component {
     this.onSubmitUrlSearch = this.onSubmitUrlSearch.bind(this);
   }
 
-  async onSubmitUrlSearch({ url }) {
+  async onSubmitUrlSearch(url) {
     const results = await fetchResults(url);
     this.setState({ url, results });
   }
