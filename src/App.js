@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
 import { Tab, Segment } from "semantic-ui-react";
-import { ControlForm } from "./components/utils/control-form";
 
 import { UrlSearchForm } from "./components/url-search-form";
 import { UrlSearchResults } from "./components/url-search-results";
@@ -13,8 +12,6 @@ class App extends Component {
     } else {
       return 1;
     }
-
-    return 0;
   };
 
   constructor(props) {
@@ -34,9 +31,9 @@ class App extends Component {
 
     this.setState({ url });
 
-    const requestUrl = `https://www.reddit.com/search.json?q=url:${url}&limit=${
-      limit
-    }`;
+    const requestUrl = `https://www.reddit.com/search.json?q=url:${encodeURIComponent(
+      url
+    )}&limit=${limit}`;
 
     const response = await fetch(requestUrl, {
       method: "GET",
