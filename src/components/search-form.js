@@ -4,10 +4,7 @@ import { Input } from "semantic-ui-react";
 import { ControlForm } from "./utils/control-form";
 
 const SearchForm = ({ label, onSubmit }) => (
-  <ControlForm
-    initialState={{ query: "" }}
-    onSubmit={state => onSubmit(state.query)}
-  >
+  <ControlForm initialState={{ query: "" }} onSubmit={onSubmit}>
     {({ onChange, value, state }) => (
       <div>
         <Input
