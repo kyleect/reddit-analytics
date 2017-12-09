@@ -1,8 +1,35 @@
 import React from "react";
-import { Item, List, Icon, Divider, Statistic } from "semantic-ui-react";
+import { ControlForm } from "./utils/control-form";
 import moment from "moment";
+import {
+  Segment,
+  Item,
+  List,
+  Icon,
+  Divider,
+  Statistic,
+  Input
+} from "semantic-ui-react";
 
-export const UrlSearchResults = ({ results }) => {
+const UrlSearchForm = ({ onSubmit }) => (
+  <ControlForm initialState={{ url: "" }} onSubmit={onSubmit}>
+    {({ onChange, value, state }) => (
+      <div>
+        <Input
+          type="text"
+          id="url"
+          label="Url"
+          action="Search"
+          onChange={onChange("url")}
+          value={value("url")}
+          style={{ width: "100%" }}
+        />
+      </div>
+    )}
+  </ControlForm>
+);
+
+const UrlSearchResults = ({ results }) => {
   const scoreTotal = results.reduce((total, result) => total + result.score, 0);
 
   const commentsTotal = results.reduce(
@@ -102,3 +129,67 @@ export const UrlSearchResults = ({ results }) => {
     </Item.Group>
   );
 };
+
+function sortResults(a, b) {
+  if (a.created < b.created) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
+async function fetchResults(url, limit = 100) {
+  if (url.length === 0) {
+    return;
+  }
+
+  const requestUrl = `https://www.reddit.com/search.json?q=url:${encodeURIComponent(
+    url
+  )}&limit=${limit}`;
+
+  const response = await fetch(requestUrl, {
+    method: "GET",
+    headers: new Headers(),
+    mode: "cors",
+    cache: "default"
+  });
+
+  const json = await response.json();
+  const results = json.data.children.map(child => child.data);
+  const sortedResults = results.slice().sort(sortResults);
+
+  return sortedResults;
+}
+
+export class LinkTab extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      results: "",
+      url: ""
+    };
+
+    this.onSubmitUrlSearch = this.onSubmitUrlSearch.bind(this);
+  }
+
+  async onSubmitUrlSearch({ url }) {
+    const results = await fetchResults(url);
+    this.setState({ url, results });
+  }
+
+  render() {
+    return (
+      <div>
+        <Segment>
+          <UrlSearchForm onSubmit={this.onSubmitUrlSearch} />
+        </Segment>
+
+        {this.state.results && (
+          <Segment>
+            <UrlSearchResults results={this.state.results} />
+          </Segment>
+        )}
+      </div>
+    );
+  }
+}
