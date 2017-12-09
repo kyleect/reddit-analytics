@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { Tab } from "semantic-ui-react";
 import { LinkTab } from "./components/link-tab";
+import { UserTab } from "./components/user-tab";
 
 class App extends React.Component {
   render() {
@@ -12,6 +13,10 @@ class App extends React.Component {
             {
               menuItem: "Link",
               render: () => <LinkTab />
+            },
+            {
+              menuItem: "User",
+              render: () => <UserTab />
             }
           ]}
         />
