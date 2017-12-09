@@ -35,6 +35,7 @@ export const SearchResults = ({ results }) => {
                     {"Original Post"}
                   </List.Item>
                 )}
+                <List.Item>{result.url}</List.Item>
                 <List.Item>
                   <Icon name="reddit" /> r/{result.subreddit}
                 </List.Item>
