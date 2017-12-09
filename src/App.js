@@ -5,6 +5,7 @@ import { LinkTab } from "./components/link-tab";
 import { UserTab } from "./components/user-tab";
 import { SelftextTab } from "./components/selftext-tab";
 import { SubredditTab } from "./components/subreddit-tab";
+import { SiteTab } from "./components/site-tab";
 
 class App extends React.Component {
   render() {
@@ -27,6 +28,10 @@ class App extends React.Component {
             {
               menuItem: "Subreddit",
               render: () => <SubredditTab />
+            },
+            {
+              menuItem: "Site",
+              render: () => <SiteTab />
             }
           ]}
         />
