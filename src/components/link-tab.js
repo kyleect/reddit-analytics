@@ -1,7 +1,6 @@
 import React from "react";
 import { Segment } from "semantic-ui-react";
 import { SearchResults } from "./search-results";
-import SearchForm from "./search-form";
 import { SearchTab } from "./utils/search-tab";
 
 export class LinkTab extends SearchTab {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Segment } from "semantic-ui-react";
-import { SearchResults } from "../search-results";
-import SearchForm from "../search-form";
+import { SearchResults } from "./search-results";
+import SearchForm from "./search-form";
 
 async function fetchResults(query, limit = 100, sort = "new") {
   if (query.length === 0) {
