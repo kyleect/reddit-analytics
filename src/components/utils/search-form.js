@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Input, Dropdown, Divider } from "semantic-ui-react";
+import { Input, Dropdown, Divider, Checkbox } from "semantic-ui-react";
 import { ControlForm } from "./control-form";
 
 const sortOptions = [
@@ -35,7 +35,7 @@ const nsfwOptions = [
 
 const SearchForm = ({ label, onSubmit }) => (
   <ControlForm
-    initialState={{ query: "", sort: "relevant", nsfw: "yes" }}
+    initialState={{ query: "", options: false, sort: "relevant", nsfw: "yes" }}
     onSubmit={onSubmit}
   >
     {({ bind, state, value, onChange }) => (
@@ -51,35 +51,53 @@ const SearchForm = ({ label, onSubmit }) => (
 
         <Divider />
 
-        <Dropdown
-          fluid
-          selection
-          value={value("sort")}
-          placeholder="Sort"
+        <Checkbox
+          toggle
+          label="Options"
+          value={value("options")}
           onChange={(e, data) =>
-            onChange("sort")({
+            onChange("options")({
               ...e,
-              target: { ...e.target, value: data.value }
+              target: { ...e.target, value: data.checked }
             })
           }
-          options={sortOptions}
         />
 
-        <Divider />
+        {state.options && (
+          <div>
+            <Divider />
 
-        <Dropdown
-          fluid
-          selection
-          value={value("nsfw")}
-          placeholder="NSFW"
-          onChange={(e, data) =>
-            onChange("nsfw")({
-              ...e,
-              target: { ...e.target, value: data.value }
-            })
-          }
-          options={nsfwOptions}
-        />
+            <Dropdown
+              fluid
+              selection
+              value={value("sort")}
+              placeholder="Sort"
+              onChange={(e, data) =>
+                onChange("sort")({
+                  ...e,
+                  target: { ...e.target, value: data.value }
+                })
+              }
+              options={sortOptions}
+            />
+
+            <Divider />
+
+            <Dropdown
+              fluid
+              selection
+              value={value("nsfw")}
+              placeholder="NSFW"
+              onChange={(e, data) =>
+                onChange("nsfw")({
+                  ...e,
+                  target: { ...e.target, value: data.value }
+                })
+              }
+              options={nsfwOptions}
+            />
+          </div>
+        )}
       </div>
     )}
   </ControlForm>
