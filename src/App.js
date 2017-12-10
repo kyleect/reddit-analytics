@@ -6,6 +6,7 @@ import { UserTab } from "./components/user-tab";
 import { SelftextTab } from "./components/selftext-tab";
 import { SubredditTab } from "./components/subreddit-tab";
 import { SiteTab } from "./components/site-tab";
+import { TitleTab } from "./components/title-tab";
 
 class App extends React.Component {
   render() {
@@ -32,6 +33,10 @@ class App extends React.Component {
             {
               menuItem: "Site",
               render: () => <SiteTab />
+            },
+            {
+              menuItem: "Title",
+              render: () => <TitleTab />
             }
           ]}
         />
