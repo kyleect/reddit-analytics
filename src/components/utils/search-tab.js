@@ -3,16 +3,14 @@ import { Segment } from "semantic-ui-react";
 import { SearchResults } from "./search-results";
 import SearchForm from "./search-form";
 
-async function fetchResults(query, limit = 100, sort = "new") {
+async function fetchResults(query, sort, nsfw, limit = 100) {
   if (query.length === 0) {
     return;
   }
 
-  const encodedQuery = encodeURIComponent(`${query}`);
+  const encodedQuery = encodeURIComponent(`${query} nsfw:${nsfw}`);
 
-  const requestUrl = `https://www.reddit.com/search.json?q=${
-    encodedQuery
-  }&limit=${limit}&sort=${sort}`;
+  const requestUrl = `https://www.reddit.com/search.json?q=${encodedQuery}&limit=${limit}&sort=${sort}`;
 
   const response = await fetch(requestUrl, {
     method: "GET",
@@ -40,8 +38,8 @@ export class SearchTab extends React.Component {
     this.queryPrefix = "";
   }
 
-  async onSubmitSearch({ query }) {
-    const results = await fetchResults(this.queryPrefix + query);
+  async onSubmitSearch({ query, sort, nsfw }) {
+    const results = await fetchResults(this.queryPrefix + query, sort, nsfw);
     this.setState({ query, results });
   }
 
