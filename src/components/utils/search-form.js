@@ -22,20 +22,9 @@ const sortOptions = [
   }
 ];
 
-const nsfwOptions = [
-  {
-    text: "NSFW",
-    value: "yes"
-  },
-  {
-    text: "SFW",
-    value: "no"
-  }
-];
-
 const SearchForm = ({ label, onSubmit }) => (
   <ControlForm
-    initialState={{ query: "", options: false, sort: "relevant", nsfw: "yes" }}
+    initialState={{ query: "", options: false, sort: "relevant", nsfw: true }}
     onSubmit={onSubmit}
   >
     {({ bind, state, value, onChange }) => (
@@ -54,7 +43,7 @@ const SearchForm = ({ label, onSubmit }) => (
         <Checkbox
           toggle
           label="Options"
-          value={value("options")}
+          checked={value("options")}
           onChange={(e, data) =>
             onChange("options")({
               ...e,
@@ -83,18 +72,16 @@ const SearchForm = ({ label, onSubmit }) => (
 
             <Divider />
 
-            <Dropdown
-              fluid
-              selection
-              value={value("nsfw")}
-              placeholder="NSFW"
+            <Checkbox
+              toggle
+              label="NSFW"
+              checked={value("nsfw")}
               onChange={(e, data) =>
                 onChange("nsfw")({
                   ...e,
-                  target: { ...e.target, value: data.value }
+                  target: { ...e.target, value: data.checked }
                 })
               }
-              options={nsfwOptions}
             />
           </div>
         )}

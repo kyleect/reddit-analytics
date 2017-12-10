@@ -8,7 +8,9 @@ async function fetchResults(query, sort, nsfw, limit = 100) {
     return;
   }
 
-  const encodedQuery = encodeURIComponent(`${query} nsfw:${nsfw}`);
+  const encodedQuery = encodeURIComponent(
+    `${query} nsfw:${nsfw ? "yes" : "no"}`
+  );
 
   const requestUrl = `https://www.reddit.com/search.json?q=${encodedQuery}&limit=${limit}&sort=${sort}`;
 
@@ -75,7 +77,7 @@ export class SearchTab extends React.Component {
             <List>
               <List.Item>Query: {this.state.query}</List.Item>
               <List.Item>Sort: {this.state.sort}</List.Item>
-              <List.Item>NSFW: {this.state.nsfw}</List.Item>
+              <List.Item>NSFW: {this.state.nsfw ? "Yes" : "No"}</List.Item>
             </List>
           </Segment>
         )}
