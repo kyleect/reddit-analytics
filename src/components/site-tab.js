@@ -11,4 +11,12 @@ export class SiteTab extends SearchTab {
     super(props);
     this.queryPrefix = "site:";
   }
+
+  sortResults(a, b) {
+    if (a.created > b.created) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
 }

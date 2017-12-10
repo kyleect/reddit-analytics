@@ -11,4 +11,12 @@ export class UserTab extends SearchTab {
     super(props);
     this.queryPrefix = "author:";
   }
+
+  sortResults(a, b) {
+    if (a.created > b.created) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
 }

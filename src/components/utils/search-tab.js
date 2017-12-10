@@ -3,22 +3,16 @@ import { Segment } from "semantic-ui-react";
 import { SearchResults } from "../search-results";
 import SearchForm from "../search-form";
 
-function sortResults(a, b) {
-  if (a.created < b.created) {
-    return -1;
-  } else {
-    return 1;
-  }
-}
-
-async function fetchResults(query, limit = 100) {
+async function fetchResults(query, limit = 100, sort = "new") {
   if (query.length === 0) {
     return;
   }
 
-  const requestUrl = `https://www.reddit.com/search.json?q=${encodeURIComponent(
-    query
-  )}&limit=${limit}`;
+  const encodedQuery = encodeURIComponent(`${query}`);
+
+  const requestUrl = `https://www.reddit.com/search.json?q=${
+    encodedQuery
+  }&limit=${limit}&sort=${sort}`;
 
   const response = await fetch(requestUrl, {
     method: "GET",
@@ -29,26 +23,38 @@ async function fetchResults(query, limit = 100) {
 
   const json = await response.json();
   const results = json.data.children.map(child => child.data);
-  const sortedResults = results.slice().sort(sortResults);
 
-  return sortedResults;
+  return results;
 }
 
 export class SearchTab extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      results: "",
+      results: [],
       query: ""
     };
 
     this.onSubmitSearch = this.onSubmitSearch.bind(this);
+    this.sortResults = this.sortResults.bind(this);
     this.queryPrefix = "";
   }
 
   async onSubmitSearch({ query }) {
     const results = await fetchResults(this.queryPrefix + query);
     this.setState({ query, results });
+  }
+
+  sortResults(a, b) {
+    if (a.created < b.created) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+
+  get sortedResults() {
+    return this.state.results.slice().sort(this.sortResults);
   }
 
   render() {
@@ -58,9 +64,9 @@ export class SearchTab extends React.Component {
           <SearchForm label={this.props.label} onSubmit={this.onSubmitSearch} />
         </Segment>
 
-        {this.state.results && (
+        {this.state.results.length > 0 && (
           <Segment>
-            <SearchResults results={this.state.results} />
+            <SearchResults results={this.sortedResults} />
           </Segment>
         )}
       </div>
