@@ -1,5 +1,5 @@
 import React from "react";
-import { Segment } from "semantic-ui-react";
+import { Segment, List } from "semantic-ui-react";
 import { SearchResults } from "./search-results";
 import SearchForm from "./search-form";
 
@@ -40,7 +40,7 @@ export class SearchTab extends React.Component {
 
   async onSubmitSearch({ query, sort, nsfw }) {
     const results = await fetchResults(this.queryPrefix + query, sort, nsfw);
-    this.setState({ query, results });
+    this.setState({ query, sort, nsfw, results });
   }
 
   sortResults(a, b) {
@@ -61,6 +61,16 @@ export class SearchTab extends React.Component {
         <Segment>
           <SearchForm label={this.props.label} onSubmit={this.onSubmitSearch} />
         </Segment>
+
+        {this.state.query.length > 0 && (
+          <Segment>
+            <List>
+              <List.Item>Query: {this.state.query}</List.Item>
+              <List.Item>Sort: {this.state.sort}</List.Item>
+              <List.Item>NSFW: {this.state.nsfw}</List.Item>
+            </List>
+          </Segment>
+        )}
 
         {this.state.results.length > 0 && (
           <Segment>
