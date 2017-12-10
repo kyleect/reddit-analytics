@@ -46,7 +46,11 @@ class ControlForm extends React.Component {
           onChange: this.onChangeCreate,
           reset: this.reset,
           value: this.getValue,
-          state: this.state
+          state: this.state,
+          bind: key => ({
+            onChange: this.onChangeCreate(key),
+            value: this.getValue(key)
+          })
         })}
       </form>
     );

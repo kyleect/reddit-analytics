@@ -5,16 +5,15 @@ import { ControlForm } from "./control-form";
 
 const SearchForm = ({ label, onSubmit }) => (
   <ControlForm initialState={{ query: "" }} onSubmit={onSubmit}>
-    {({ onChange, value, state }) => (
+    {({ bind, state }) => (
       <div>
         <Input
           type="text"
           id="query"
           label={label}
           action="Search"
-          onChange={onChange("query")}
-          value={value("query")}
           style={{ width: "100%" }}
+          {...bind("query")}
         />
       </div>
     )}
