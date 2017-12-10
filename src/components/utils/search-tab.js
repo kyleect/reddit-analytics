@@ -55,6 +55,14 @@ export class SearchTab extends React.Component {
     return this.state.results.slice().sort(this.sortResults);
   }
 
+  renderBeforeResults() {
+    return null;
+  }
+
+  renderAfterResults() {
+    return null;
+  }
+
   render() {
     return (
       <div>
@@ -74,7 +82,9 @@ export class SearchTab extends React.Component {
 
         {this.state.results.length > 0 && (
           <Segment>
+            {this.renderBeforeResults()}
             <SearchResults results={this.sortedResults} />
+            {this.renderAfterResults()}
           </Segment>
         )}
       </div>

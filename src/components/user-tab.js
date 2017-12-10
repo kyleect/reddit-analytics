@@ -19,25 +19,7 @@ export class UserTab extends SearchTab {
     }
   }
 
-  render() {
-    return (
-      <div>
-        <Segment>
-          <SearchForm label={this.props.label} onSubmit={this.onSubmitSearch} />
-        </Segment>
-
-        {this.state.results.length > 0 && (
-          <div>
-            <Segment>
-              <UserProfile userId={this.state.query} />
-            </Segment>
-
-            <Segment>
-              <SearchResults results={this.sortedResults} />
-            </Segment>
-          </div>
-        )}
-      </div>
-    );
+  renderBeforeResults() {
+    return <UserProfile userId={this.state.query} />;
   }
 }
