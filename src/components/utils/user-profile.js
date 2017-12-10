@@ -41,6 +41,17 @@ class UserProfile extends React.Component {
     }
   }
 
+  async componentWillReceiveProps(nextProps) {
+    if (nextProps.userId !== this.props.userId) {
+      try {
+        const user = await fetchUser(nextProps.userId);
+        this.setState({ user });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }
+
   render() {
     return (
       <div>
