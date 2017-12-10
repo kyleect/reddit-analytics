@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Input } from "semantic-ui-react";
-import { ControlForm } from "./utils/control-form";
+import { ControlForm } from "./control-form";
 
 const SearchForm = ({ label, onSubmit }) => (
   <ControlForm initialState={{ query: "" }} onSubmit={onSubmit}>
