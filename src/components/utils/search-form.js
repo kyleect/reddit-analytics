@@ -24,7 +24,13 @@ const sortOptions = [
 
 const SearchForm = ({ label, onSubmit }) => (
   <ControlForm
-    initialState={{ query: "", options: false, sort: "relevant", nsfw: true }}
+    initialState={{
+      query: "",
+      options: false,
+      limit: 100,
+      sort: "relevant",
+      nsfw: true
+    }}
     onSubmit={onSubmit}
   >
     {({ bind, state, value, onChange }) => (
@@ -54,6 +60,17 @@ const SearchForm = ({ label, onSubmit }) => (
 
         {state.options && (
           <div>
+            <Divider />
+
+            <Input
+              type="number"
+              label="Limit"
+              min={1}
+              max={100}
+              style={{ width: "100%" }}
+              {...bind("limit")}
+            />
+
             <Divider />
 
             <Dropdown
