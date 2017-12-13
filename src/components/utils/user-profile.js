@@ -57,13 +57,15 @@ class UserProfile extends React.Component {
       <div>
         {this.state.user ? (
           <div>
-            <Item>
-              <Item.Image size="tiny" src={this.state.user.icon_img} />
+            <Item.Group>
+              <Item>
+                <Item.Image size="tiny" src={this.state.user.icon_img} />
 
-              <Item.Content>
-                <Item.Header>{this.state.user.name}</Item.Header>
-              </Item.Content>
-            </Item>
+                <Item.Content>
+                  <Item.Header>{this.state.user.name}</Item.Header>
+                </Item.Content>
+              </Item>
+            </Item.Group>
 
             <Statistic>
               <Statistic.Value>{this.state.user.comment_karma}</Statistic.Value>
