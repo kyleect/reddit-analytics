@@ -12,7 +12,7 @@ async function fetchResults(query, sort, nsfw, limit = 100) {
     `${query} nsfw:${nsfw ? "yes" : "no"}`
   );
 
-  const requestUrl = `https://www.reddit.com/search.json?q=${encodedQuery}&limit=${limit}&sort=${sort}`;
+  const requestUrl = `https://www.reddfit.com/search.json?q=${encodedQuery}&limit=${limit}&sort=${sort}`;
 
   const response = await fetch(requestUrl, {
     method: "GET",
@@ -41,8 +41,12 @@ export class SearchTab extends React.Component {
   }
 
   async onSubmitSearch({ query, sort, nsfw }) {
-    const results = await fetchResults(this.queryPrefix + query, sort, nsfw);
-    this.setState({ query, sort, nsfw, results });
+    try {
+      const results = await fetchResults(this.queryPrefix + query, sort, nsfw);
+      this.setState({ query, sort, nsfw, results });
+    } catch (e) {
+      this.setState({ query, sort, nsfw, results: [], error: e });
+    }
   }
 
   sortResults(a, b) {
@@ -78,6 +82,9 @@ export class SearchTab extends React.Component {
               <List.Item>Query: {this.state.query}</List.Item>
               <List.Item>Sort: {this.state.sort}</List.Item>
               <List.Item>NSFW: {this.state.nsfw ? "Yes" : "No"}</List.Item>
+              {this.state.error && (
+                <List.Item>Error: {this.state.error.message}</List.Item>
+              )}
             </List>
           </Segment>
         )}
