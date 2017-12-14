@@ -12,7 +12,7 @@ async function fetchResults(query, sort, nsfw, limit = 100) {
     `${query} nsfw:${nsfw ? "yes" : "no"}`
   );
 
-  const requestUrl = `https://www.reddfit.com/search.json?q=${encodedQuery}&limit=${limit}&sort=${sort}`;
+  const requestUrl = `https://www.reddit.com/search.json?q=${encodedQuery}&limit=${limit}&sort=${sort}`;
 
   const response = await fetch(requestUrl, {
     method: "GET",
