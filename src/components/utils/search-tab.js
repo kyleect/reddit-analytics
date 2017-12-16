@@ -14,13 +14,14 @@ async function fetchResults(query, sort, nsfw, limit = 100) {
 
   const requestUrl = `https://www.reddit.com/search.json?q=${encodedQuery}&limit=${limit}&sort=${sort}`;
 
-  const response = await fetch(requestUrl, {
+  const requestOptions = {
     method: "GET",
     headers: new Headers(),
     mode: "cors",
     cache: "default"
-  });
+  };
 
+  const response = await fetch(requestUrl, requestOptions);
   const json = await response.json();
   const results = json.data.children.map(child => child.data);
 
