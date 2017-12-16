@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Tab } from "semantic-ui-react";
+import { Tab, Header } from "semantic-ui-react";
 import { LinkTab } from "./components/link-tab";
 import { UserTab } from "./components/user-tab";
 import { SelftextTab } from "./components/selftext-tab";
@@ -12,6 +12,8 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <Header as="h1">reddit-analytics</Header>
+
         <Tab
           panes={[
             {
